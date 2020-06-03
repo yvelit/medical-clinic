@@ -88,12 +88,15 @@ namespace Domain
             return _doctors.Find(key);
         }
 
-        public MedicalAppointment[] GetMedicalAppointments(DateTime date)
+        public MedicalAppointment[] GetMedicalAppointments(DateTime date, MedicalAppointmentType type)
         {
             var medicalAppointments = _medicalAppointments.ToArray();
             var sortedMedicalAppointments = medicalAppointments.MergeSort();
 
-            return sortedMedicalAppointments.Where(x => x.Date == date).ToArray();
+            return sortedMedicalAppointments
+                .Where(x => x.Date == date && x.MedicalAppointmentType == type)
+                .ToArray()
+                ;
         }
 
         public Doctor[] GetMedicalDoctors()
