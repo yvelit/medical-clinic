@@ -123,6 +123,8 @@ namespace Domain.People
 
             builder.Append("]");
 
+            builder.Append($" - Valor Total: {TotalValueMedicalAppointments:0.##}");
+
             return builder.ToString();
         }
 

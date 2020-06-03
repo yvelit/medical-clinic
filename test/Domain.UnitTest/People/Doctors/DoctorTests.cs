@@ -75,7 +75,7 @@ namespace Domain.UnitTest.People.Doctors
             var result = doctor.ToString();
 
             // assert
-            Assert.Equal("CRM: 12345 - Nome: name - Consultas: [] - Especialidade médica: Clínica geral", result);
+            Assert.Equal("CRM: 12345 - Nome: name - Consultas: [] - Valor Total: 0 - Especialidade médica: Clínica geral", result);
         }
 
         [Fact(DisplayName = "Deve transformar uma médico com consultas médicas em uma string")]
@@ -93,7 +93,7 @@ namespace Domain.UnitTest.People.Doctors
             var result = doctor.ToString();
 
             // assert
-            Assert.Equal($"CRM: 12345 - Nome: name - Consultas: [{medicalAppointment1},{medicalAppointment2}] - Especialidade médica: Clínica geral", result);
+            Assert.Equal($"CRM: 12345 - Nome: name - Consultas: [{medicalAppointment1},{medicalAppointment2}] - Valor Total: 128 - Especialidade médica: Clínica geral", result);
         }
 
         [Fact(DisplayName = "Deve retornar verdadeiro ao comparar dois médicos iguais")]

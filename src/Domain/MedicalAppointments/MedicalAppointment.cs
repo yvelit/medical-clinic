@@ -1,4 +1,5 @@
 ﻿using System;
+using Core.Extensions;
 using Domain.People;
 using Domain.People.Customers;
 using Domain.People.Doctors;
@@ -212,6 +213,11 @@ namespace Domain.MedicalAppointments
             }
 
             return Date.CompareTo(other.Date);
+        }
+
+        public override string ToString()
+        {
+            return $"Data: {Date} - Tipo de consulta: {MedicalAppointmentType.GetDescription()} - Cliente: {CustomerCode} - Médico: {DoctorCode} - Valor: {Value}";
         }
     }
 }

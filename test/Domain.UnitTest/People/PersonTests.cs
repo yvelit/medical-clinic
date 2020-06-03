@@ -72,7 +72,7 @@ namespace Domain.UnitTest.People
             var result = person.ToString();
 
             // assert
-            Assert.Equal("Código: code - Nome: name - Consultas: []", result);
+            Assert.Equal("Código: code - Nome: name - Consultas: [] - Valor Total: 0", result);
         }
 
         [Fact(DisplayName = "Deve transformar uma pessoa com consultas médicas em uma string")]
@@ -91,7 +91,7 @@ namespace Domain.UnitTest.People
             var result = person.ToString();
 
             // assert
-            Assert.Equal($"Código: code - Nome: name - Consultas: [{medicalAppointment1},{medicalAppointment2}]", result);
+            Assert.Equal($"Código: code - Nome: name - Consultas: [{medicalAppointment1},{medicalAppointment2}] - Valor Total: 0", result);
         }
 
         [Fact(DisplayName = "Deve retornar verdadeiro ao comparar duas pessoas iguais")]

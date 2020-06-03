@@ -1,4 +1,5 @@
 ﻿using System;
+using Core.Extensions;
 using Domain.MedicalAppointments;
 using Domain.People.Customers;
 
@@ -68,7 +69,7 @@ namespace Domain.People
 
         public override string ToString()
         {
-            return base.ToString().Replace("Código", "CPF");
+            return base.ToString().Replace("Código", "CPF") + $" - Tipo de cliente: {CustomerType.GetDescription()}"; ;
         }
     }
 }

@@ -72,7 +72,7 @@ namespace Domain.UnitTest.People.Customers
             var result = customer.ToString();
 
             // assert
-            Assert.Equal("CPF: 012345678-90 - Nome: name - Consultas: []", result);
+            Assert.Equal("CPF: 012345678-90 - Nome: name - Consultas: [] - Valor Total: 0 - Tipo de cliente: Normal", result);
         }
 
         [Fact(DisplayName = "Deve transformar um cliente com consultas médicas em uma string")]
@@ -90,7 +90,7 @@ namespace Domain.UnitTest.People.Customers
             var result = customer.ToString();
 
             // assert
-            Assert.Equal($"CPF: 012345678-90 - Nome: name - Consultas: [{medicalAppointment1},{medicalAppointment2}]", result);
+            Assert.Equal($"CPF: 012345678-90 - Nome: name - Consultas: [{medicalAppointment1},{medicalAppointment2}] - Valor Total: 160 - Tipo de cliente: Normal", result);
         }
 
         [Fact(DisplayName = "Deve retornar verdadeiro ao comparar dois clientes iguais")]
