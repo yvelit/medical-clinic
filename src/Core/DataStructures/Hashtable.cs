@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Core.DataStructures
 {
@@ -77,6 +78,11 @@ namespace Core.DataStructures
         public int Count()
         {
             return _table.Count;
+        }
+
+        public T[] ToArray()
+        {
+            return _table.Values.ToArray();
         }
     }
 }

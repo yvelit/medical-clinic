@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Linq;
 using Core.DataStructures;
+using Core.Extensions;
 using Domain.MedicalAppointments;
 using Domain.People;
 using Domain.People.Customers;
@@ -84,6 +86,21 @@ namespace Domain
             }
 
             return _doctors.Find(key);
+        }
+
+        public MedicalAppointment[] GetMedicalAppointments(DateTime date)
+        {
+            var medicalAppointments = _medicalAppointments.ToArray();
+            var sortedMedicalAppointments = medicalAppointments.MergeSort();
+
+            return sortedMedicalAppointments.Where(x => x.Date == date).ToArray();
+        }
+
+        public Doctor[] GetMedicalDoctors()
+        {
+            var doctors = _doctors.ToArray();
+
+            return doctors.MergeSortDescending().ToArray();
         }
 
         public int CountCustomer()

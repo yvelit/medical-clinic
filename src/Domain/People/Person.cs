@@ -7,7 +7,7 @@ using Domain.MedicalAppointments;
 
 namespace Domain.People
 {
-    public abstract class Person
+    public abstract class Person:IComparable<Person>
     {
         protected Person(Code code, string name)
         {
@@ -81,13 +81,35 @@ namespace Domain.People
 
         #endregion MedicalAppointments
 
+        public decimal TotalValueMedicalAppointments
+        {
+            get { return GetTotalValueMedicalAppointments(); }
+            set { SetTotalValueMedicalAppointments(value); }
+        }
+
+        #region TotalValueMedicalAppointments
+
+        private decimal _totalValueMedicalAppointments = 0m;
+
+        public decimal GetTotalValueMedicalAppointments()
+        {
+            return _totalValueMedicalAppointments;
+        }
+
+        private void SetTotalValueMedicalAppointments(decimal value)
+        {
+            _totalValueMedicalAppointments = value;
+        }
+
+        #endregion TotalValueMedicalAppointments
+
         public void AddMedicalAppointment(MedicalAppointment medicalAppointment)
         {
             if (medicalAppointment is null)
             {
                 throw new ArgumentNullException("MedicalAppointment cannot be null.");
             }
-
+            TotalValueMedicalAppointments += GetMedicalAppointmentValue(medicalAppointment);
             _medicalAppointments.Add(medicalAppointment);
         }
 
@@ -117,6 +139,16 @@ namespace Domain.People
         public override int GetHashCode()
         {
             return Code.GetHashCode();
+        }
+
+        public int CompareTo(Person other)
+        {
+            if (other == null)
+            {
+                return 1;
+            }
+
+            return TotalValueMedicalAppointments.CompareTo(other.TotalValueMedicalAppointments);
         }
     }
 }

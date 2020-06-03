@@ -5,7 +5,7 @@ using Domain.People.Doctors;
 
 namespace Domain.MedicalAppointments
 {
-    public class MedicalAppointment : ICustomerRelated, IDoctorRelated
+    public class MedicalAppointment : ICustomerRelated, IDoctorRelated,IComparable<MedicalAppointment>
     {
         public MedicalAppointment(DateTime date, MedicalAppointmentType medicalAppointmentType, Customer customer, Doctor doctor)
         {
@@ -202,6 +202,16 @@ namespace Domain.MedicalAppointments
             hashCode = hashCode * -1521134295 + CustomerCode.GetHashCode();
             hashCode = hashCode * -1521134295 + DoctorCode.GetHashCode();
             return hashCode;
+        }
+
+        public int CompareTo(MedicalAppointment other)
+        {
+            if (other == null)
+            {
+                return 1;
+            }
+
+            return Date.CompareTo(other.Date);
         }
     }
 }
