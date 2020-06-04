@@ -30,7 +30,7 @@ namespace Core.Extensions
 
         public static void InvalidInput()
         {
-            Console.WriteLine("Invalid input.");
+            Console.WriteLine("Entrada inválida.");
             Sleep();
         }
     }

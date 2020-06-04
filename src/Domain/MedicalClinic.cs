@@ -99,7 +99,7 @@ namespace Domain
                 ;
         }
 
-        public Doctor[] GetMedicalDoctors()
+        public Doctor[] GetDoctors()
         {
             var doctors = _doctors.ToArray();
 

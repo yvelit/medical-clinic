@@ -1,28 +1,31 @@
 ﻿using System;
 using System.Linq;
 using Core.Extensions;
+using Domain;
+using Domain.People.Customers;
 
 namespace Application
 {
     internal class Program
     {
         private static MenuItem[] _menuItems;
-
+        private static MedicalClinic _medicalClinic;
         private static void Main(string[] args)
         {
-            Console.WriteLine("MEDICAL CLINIC");
+            Console.WriteLine("CLINÍCA MÉDICA");
+            _medicalClinic = new MedicalClinic();
             _menuItems = GetMenuItems();
 
             while (true)
             {
                 ImprimirMenuItems(_menuItems);
                 var option = ConsoleExtensions.ReadLine<int>("", (i) =>
-                 {
-                     if (i < 0 || i > _menuItems.Count())
-                     {
-                         throw new InvalidOperationException();
-                     }
-                 });
+                {
+                    if (i < 0 || i > _menuItems.Count())
+                    {
+                        throw new InvalidOperationException();
+                    }
+                });
 
                 if (option == 0)
                 {
@@ -31,25 +34,34 @@ namespace Application
 
                 Executar(option);
 
-                Console.WriteLine("Press any key to continue...");
+                Console.WriteLine("Pressione qualquer tecla para continuar...");
                 Console.ReadKey();
             }
         }
 
         private static void Executar(int valorOpcao)
         {
-            MenuItem menuItem = _menuItems[--valorOpcao];
+            try
+            {
+                MenuItem menuItem = _menuItems[--valorOpcao];
 
-            Console.WriteLine();
-            Console.WriteLine($"Executing: {menuItem.Titulo}");
+                Console.WriteLine();
+                Console.WriteLine($"Executando: {menuItem.Titulo}");
 
-            menuItem.Action.Invoke();
-            Console.WriteLine();
+                menuItem.Action.Invoke();
+                Console.WriteLine();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Aconteceu algum erro.");
+                Console.WriteLine(ex.Message);
+            }
+            
         }
 
         private static void ImprimirMenuItems(MenuItem[] menuItems)
         {
-            Console.WriteLine("SELECT A OPTION");
+            Console.WriteLine("SELECIONE UMA OPÇÃO");
             Console.WriteLine("===================");
             Console.WriteLine("0 - Sair");
 
@@ -65,12 +77,18 @@ namespace Application
         {
             return new MenuItem[]
             {
-                new MenuItem("Load customers from file", LoadCustomersFromFile),
-                new MenuItem("Load doctors from file", LoadDoctorsFromFile),
-                new MenuItem("Get customer", GetCustomer),
-                new MenuItem("Get doctors", GetDoctors),
-                new MenuItem("Get medical appointments", GetMedicalAppointments),
+                new MenuItem("Carregar clientes de um arquivo", LoadCustomersFromFile),
+                new MenuItem("Carregar médicos de um arquivo", LoadDoctorsFromFile),
+                new MenuItem("Carregar consultas médicas de um arquivo", LoadMedicalAppointmentsFromFile),
+                new MenuItem("Recuperar um cliente", GetCustomer),
+                new MenuItem("Recuperar os médicos", GetDoctors),
+                new MenuItem("Recuperar as consultas médicas", GetMedicalAppointments),
             };
+        }
+
+        private static void LoadMedicalAppointmentsFromFile()
+        {
+            throw new NotImplementedException();
         }
 
         private static void GetMedicalAppointments()
@@ -80,12 +98,22 @@ namespace Application
 
         private static void GetDoctors()
         {
-            throw new NotImplementedException();
+            var doctors = _medicalClinic.GetDoctors();
+
+            foreach (var doctor in doctors)
+            {
+                Console.WriteLine(doctor.ToString());
+            }
         }
 
         private static void GetCustomer()
         {
-            throw new NotImplementedException();
+            Console.WriteLine();
+            Console.WriteLine("Digite o cpf do cliente no formato 'XXXXXXXXX-XX':");
+            var cpf = Console.ReadLine();
+
+            var customer = _medicalClinic.GetCustomer((Cpf)cpf);
+            Console.WriteLine(customer.ToString());
         }
 
         private static void LoadDoctorsFromFile()
