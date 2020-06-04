@@ -44,7 +44,7 @@ namespace Domain
             {
                 throw new InvalidOperationException("Médico já existe.");
             }
-
+            _lastDoctorAppointments[(int)medicalSpecialty].Add(crm);
             _doctors.Add(doctor);
         }
 
