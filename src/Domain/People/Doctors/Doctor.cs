@@ -34,7 +34,7 @@ namespace Domain.People
                     return 130;
 
                 default:
-                    throw new NotImplementedException("Medical specialty not implemented yet.");
+                    throw new NotImplementedException("Especialidade médica ainda não implementada.");
             }
         }
 

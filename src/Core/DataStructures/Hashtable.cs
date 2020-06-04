@@ -17,14 +17,14 @@ namespace Core.DataStructures
         {
             if (data.Equals(default(T)))
             {
-                throw new ArgumentException("Data cannot be null.");
+                throw new ArgumentException("Data não pode ser nula.");
             }
 
             var key = data.GetHashCode();
 
             if (Exist(key))
             {
-                throw new InvalidOperationException("An element with the same key already exists.");
+                throw new InvalidOperationException("Um elemento com o mesmo identificador já existe.");
             }
 
             _table.Add(key, data);
@@ -41,7 +41,7 @@ namespace Core.DataStructures
         {
             if (!Exist(key))
             {
-                throw new InvalidOperationException("Elemend does not exist.");
+                throw new InvalidOperationException("Elemento não existe.");
             }
 
             var value = _table[key];

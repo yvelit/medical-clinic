@@ -28,7 +28,7 @@ namespace Domain.People.Customers
             base.Validate(value);
             if (!_cpfRegex.IsMatch(value))
             {
-                throw new ArgumentException("CPF is not in format 'XXXXXXXXX-XX'.");
+                throw new ArgumentException("CPF não está no formato: 'XXXXXXXXX-XX'.");
             }
         }
 

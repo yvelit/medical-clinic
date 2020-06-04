@@ -95,7 +95,7 @@ namespace Domain.MedicalAppointments
         {
             if (value is null)
             {
-                throw new ArgumentException("Customer cannot be null.");
+                throw new ArgumentException("Cliente não pode ser nulo.");
             }
 
             _customer = value;
@@ -140,7 +140,7 @@ namespace Domain.MedicalAppointments
         {
             if (value is null)
             {
-                throw new ArgumentException("Doctor cannot be null.");
+                throw new ArgumentException("Médico não pode ser nulo.");
             }
 
             _doctor = value;
@@ -172,7 +172,7 @@ namespace Domain.MedicalAppointments
                     break;
 
                 default:
-                    throw new NotImplementedException("Medical appointment type not implemented yet.");
+                    throw new NotImplementedException("Tipo de consulta médica ainda não implementado.");
             }
 
             return Doctor.MedicalSpecialtyValue * multiplier;

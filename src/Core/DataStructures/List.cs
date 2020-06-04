@@ -53,7 +53,7 @@ namespace Core.DataStructures
                 aux = aux.Next;
             }
 
-            throw new InvalidOperationException("Element does not exist.");
+            throw new InvalidOperationException("Elemento não existe.");
         }
 
         public T Find(T data)

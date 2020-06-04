@@ -28,7 +28,7 @@ namespace Domain
 
             if (_customers.Exist(customer))
             {
-                throw new InvalidOperationException("Customer already exists.");
+                throw new InvalidOperationException("Cliente já existe.");
             }
 
             _customers.Add(customer);
@@ -40,7 +40,7 @@ namespace Domain
 
             if (_doctors.Exist(doctor))
             {
-                throw new InvalidOperationException("Doctor already exists.");
+                throw new InvalidOperationException("Médico já existe.");
             }
 
             _doctors.Add(doctor);
@@ -55,7 +55,7 @@ namespace Domain
 
             if (_medicalAppointments.Exist(medicalAppointment))
             {
-                throw new InvalidOperationException("Medical appointment already exists.");
+                throw new InvalidOperationException("Consulta médica já existe.");
             }
 
             customer.AddMedicalAppointment(medicalAppointment);
@@ -70,7 +70,7 @@ namespace Domain
 
             if (!_customers.Exist(key))
             {
-                throw new InvalidOperationException("Customer does not exist");
+                throw new InvalidOperationException("Cliente não existe.");
             }
 
             return _customers.Find(key);
@@ -82,7 +82,7 @@ namespace Domain
 
             if (!_doctors.Exist(key))
             {
-                throw new InvalidOperationException("Doctor does not exist");
+                throw new InvalidOperationException("Médico não existe.");
             }
 
             return _doctors.Find(key);

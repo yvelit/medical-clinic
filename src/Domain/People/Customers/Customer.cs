@@ -48,7 +48,7 @@ namespace Domain.People
                     return 0;
 
                 default:
-                    throw new InvalidOperationException("Customer type not implemented yet.");
+                    throw new InvalidOperationException("Tipo de cliente ainda não implementado.");
             }
         }
 

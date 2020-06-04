@@ -33,7 +33,7 @@ namespace Domain.People
 
         public void SetCode(Code value)
         {
-            _code = value ?? throw new ArgumentException("Code cannot be null.");
+            _code = value ?? throw new ArgumentException("Código não pode ser nulo.");
         }
 
         #endregion Code
@@ -57,7 +57,7 @@ namespace Domain.People
         {
             if (value.IsNullOrEmptyOrWhiteSpace())
             {
-                throw new ArgumentException("Name cannot be null or empty or blank.");
+                throw new ArgumentException("Nome não pode ser nulo nem vazio nem em branco.");
             }
 
             _name = value;
@@ -107,7 +107,7 @@ namespace Domain.People
         {
             if (medicalAppointment is null)
             {
-                throw new ArgumentNullException("MedicalAppointment cannot be null.");
+                throw new ArgumentNullException("Consulta médica não pode ser nula.");
             }
             TotalValueMedicalAppointments += GetMedicalAppointmentValue(medicalAppointment);
             _medicalAppointments.Add(medicalAppointment);

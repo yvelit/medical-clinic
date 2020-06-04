@@ -38,7 +38,7 @@ namespace Domain.People
         {
             if (value.IsNullOrEmptyOrWhiteSpace())
             {
-                throw new ArgumentException("Value cannot be null or empty or blank");
+                throw new ArgumentException("Valor não pode ser nulo nem vazio nem em branco");
             }
         }
 

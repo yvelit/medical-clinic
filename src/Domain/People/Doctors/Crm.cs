@@ -29,7 +29,7 @@ namespace Domain.People.Doctors
 
             if (!_crmRegex.IsMatch(value))
             {
-                throw new ArgumentException("CRM is not in format 'XXXXX'.");
+                throw new ArgumentException("CRM não está no formato: 'XXXXX'.");
             }
         }
 
