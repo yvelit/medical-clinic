@@ -49,15 +49,15 @@ namespace Domain
                 throw new InvalidOperationException("Médico já existe.");
             }
 
-            _lastDoctorAppointments[(int)medicalSpecialty].Add(crm);
+            _lastDoctorAppointments[(int)medicalSpecialty].Enqueue(crm);
             _doctors.Add(doctor);
         }
 
         public void AddMedicalAppointment(Cpf cpf, MedicalAppointmentType medicalAppointmentType, MedicalSpecialty medicalSpecialty, DateTime date)
         {
             var customer = GetCustomer(cpf);
-            Crm crm = _lastDoctorAppointments[(int)medicalSpecialty].Remove();
-            _lastDoctorAppointments[(int)medicalSpecialty].Add(crm);
+            Crm crm = _lastDoctorAppointments[(int)medicalSpecialty].Dequeue();
+            _lastDoctorAppointments[(int)medicalSpecialty].Enqueue(crm);
             var doctor = GetDoctor(crm);
 
             var medicalAppointment = new MedicalAppointment(date, medicalAppointmentType, customer, doctor);

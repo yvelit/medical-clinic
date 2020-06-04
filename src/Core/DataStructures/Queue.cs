@@ -1,38 +1,69 @@
-using System;
-
-namespace Core.DataStructures
+﻿namespace Core.DataStructures
 {
     public class Queue<T>
     {
-        protected QueueItem<T> _first;
-        protected QueueItem<T> _last;
+        protected Item<T> _first;
+        protected Item<T> _last;
 
         public Queue()
         {
-            _first = new QueueItem<T>(default);
+            _first = new Item<T>(default);
             _last = _first;
         }
 
-        public void Add(T data)
+        public void Enqueue(T data)
         {
-            var newQueueItem = new QueueItem<T>(data);
+            var newQueueItem = new Item<T>(data);
 
             _last.Next = newQueueItem;
             _last = newQueueItem;
         }
 
-        public T Remove()
+        public T Dequeue()
         {
-            if(_first == _last) return default;
-            QueueItem<T> result = _first.Next;
-            _first.Next = result.Next;
+            if (IsEmpty())
+            {
+                return default;
+            }
 
-            if (result == _last)
+            var aux = _first.Next;
+            _first.Next = aux.Next;
+
+            if (aux == _last)
             {
                 _last = _first;
             }
-            
-            return result.Data;
+
+            return aux.Data;
+        }
+
+        public T Peek()
+        {
+            if (IsEmpty())
+            {
+                return default;
+            }
+
+            return _first.Next.Data;
+        }
+
+        public int Count()
+        {
+            int count = 0;
+
+            var aux = _first.Next;
+            while (aux != null)
+            {
+                aux = aux.Next;
+                count++;
+            }
+
+            return count;
+        }
+
+        public bool IsEmpty()
+        {
+            return _first == _last;
         }
     }
 }
