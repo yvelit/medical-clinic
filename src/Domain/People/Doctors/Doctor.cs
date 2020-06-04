@@ -29,9 +29,22 @@ namespace Domain.People
 
                 case MedicalSpecialty.Otorhinolaryngology:
                     return 150;
-
                 case MedicalSpecialty.Orthopedy:
                     return 130;
+                case MedicalSpecialty.Urologist:
+                    return 120;
+                case MedicalSpecialty.Anesthesiologist:
+                    return 160;
+                case MedicalSpecialty.Dermatologist:
+                    return 90;
+                case MedicalSpecialty.Gynecologist:
+                    return 120;
+                case MedicalSpecialty.Neurologist:
+                    return 150;
+                case MedicalSpecialty.Pedriatrician:
+                    return 80;
+                case MedicalSpecialty.Surgeon:
+                    return 180;
 
                 default:
                     throw new NotImplementedException("Especialidade médica ainda não implementada.");

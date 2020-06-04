@@ -22,7 +22,7 @@ namespace Domain
             _medicalAppointments = new Hashtable<MedicalAppointment>();
         }
 
-        public void AddCustomer(Cpf cpf, string name, CustomerType customerType)
+        public void AddCustomer(Cpf cpf, string name, CustomerType customerType = CustomerType.Normal)
         {
             var customer = new Customer(cpf, name, customerType);
 
@@ -110,6 +110,7 @@ namespace Domain
         {
             return _customers.Count();
         }
+///home/victor/Área de Trabalho
 
         public int CountDoctor()
         {

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using Core.Extensions;
 using Domain;
+using Domain.MedicalAppointments;
 using Domain.People.Customers;
 using Domain.People.Doctors;
 
@@ -92,7 +93,25 @@ namespace Application
 
         private static void LoadMedicalAppointmentsFromFile()
         {
-            throw new NotImplementedException();
+            var lines = LoadFromFile();
+            int failCounter = 0;
+            foreach (string line in lines)
+            {
+                var temp = line.Split(';');
+                try
+                {
+                    _medicalClinic.AddMedicalAppointment(
+                        Convert.ToDateTime(temp[3]),
+                        (MedicalAppointmentType)int.Parse(temp[1]),
+                        new Cpf(temp[0]),
+                        new Crm("31218"));//TODO
+                }
+                catch (System.Exception e)
+                {
+                    failCounter++;
+                }
+            }
+            Console.WriteLine($"Foram carregados {_medicalClinic.CountMedicalAppointment()} consultas, {failCounter} falharam");
         }
 
         private static void GetMedicalAppointments()
@@ -170,12 +189,43 @@ namespace Application
 
         private static void LoadDoctorsFromFile()
         {
-            throw new NotImplementedException();
+            var lines = LoadFromFile();
+            int failCounter = 0;
+            foreach (string line in lines)
+            {
+                var temp = line.Split(';');
+                try
+                {
+                    _medicalClinic.AddDoctor(
+                        new Crm(temp[0]),
+                        temp[1],
+                        (MedicalSpecialty)int.Parse(temp[2]));
+                }
+                catch (System.Exception)
+                {
+                    failCounter++;
+                }
+            }
+            Console.WriteLine($"Foram carregados {_medicalClinic.CountDoctor()} médicos, {failCounter} falharam");
         }
 
         private static void LoadCustomersFromFile()
         {
-            throw new NotImplementedException();
+            var lines = LoadFromFile();
+            int failCounter = 0;
+            foreach (string line in lines)
+            {
+                var temp = line.Split(';');
+                try
+                {
+                    _medicalClinic.AddCustomer(new Cpf(temp[0]), temp[1]);
+                }
+                catch (System.Exception)
+                {
+                    failCounter++;
+                }
+            }
+            Console.WriteLine($"Foram carregados {_medicalClinic.CountCustomer()} pacientes, {failCounter} falharam");
         }
 
         private static IEnumerable<string> LoadFromFile()
