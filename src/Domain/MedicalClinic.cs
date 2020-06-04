@@ -22,6 +22,10 @@ namespace Domain
             _customers = new Hashtable<Customer>();
             _medicalAppointments = new Hashtable<MedicalAppointment>();
             _lastDoctorAppointments = new Queue<Crm>[10];
+            for (int i = 0; i < _lastDoctorAppointments.Length; i++)
+            {
+                _lastDoctorAppointments[i] = new Queue<Crm>();
+            }
         }
 
         public void AddCustomer(Cpf cpf, string name, CustomerType customerType = CustomerType.Normal)
@@ -44,6 +48,7 @@ namespace Domain
             {
                 throw new InvalidOperationException("Médico já existe.");
             }
+
             _lastDoctorAppointments[(int)medicalSpecialty].Add(crm);
             _doctors.Add(doctor);
         }
