@@ -101,16 +101,17 @@ namespace Application
                 try
                 {
                     _medicalClinic.AddMedicalAppointment(
-                        Convert.ToDateTime(temp[3]),
-                        (MedicalAppointmentType)int.Parse(temp[1]),
                         new Cpf(temp[0]),
-                        new Crm("31218"));//TODO
+                        (MedicalAppointmentType)int.Parse(temp[1]),
+                        (MedicalSpecialty)int.Parse(temp[2]),
+                        Convert.ToDateTime(temp[3]));
                 }
-                catch (System.Exception e)
+                catch (System.Exception)
                 {
                     failCounter++;
                 }
             }
+
             Console.WriteLine($"Foram carregados {_medicalClinic.CountMedicalAppointment()} consultas, {failCounter} falharam");
         }
 

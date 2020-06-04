@@ -14,12 +14,14 @@ namespace Domain
         private readonly Hashtable<Doctor> _doctors;
         private readonly Hashtable<Customer> _customers;
         private readonly Hashtable<MedicalAppointment> _medicalAppointments;
+        private readonly Queue<Crm>[] _lastDoctorAppointments;
 
         public MedicalClinic()
         {
             _doctors = new Hashtable<Doctor>();
             _customers = new Hashtable<Customer>();
             _medicalAppointments = new Hashtable<MedicalAppointment>();
+            _lastDoctorAppointments = new Queue<Crm>[10];
         }
 
         public void AddCustomer(Cpf cpf, string name, CustomerType customerType = CustomerType.Normal)
@@ -46,9 +48,11 @@ namespace Domain
             _doctors.Add(doctor);
         }
 
-        public void AddMedicalAppointment(DateTime date, MedicalAppointmentType medicalAppointmentType, Cpf cpf, Crm crm)
+        public void AddMedicalAppointment(Cpf cpf, MedicalAppointmentType medicalAppointmentType, MedicalSpecialty medicalSpecialty, DateTime date)
         {
             var customer = GetCustomer(cpf);
+            Crm crm = _lastDoctorAppointments[(int)medicalSpecialty].Remove();
+            _lastDoctorAppointments[(int)medicalSpecialty].Add(crm);
             var doctor = GetDoctor(crm);
 
             var medicalAppointment = new MedicalAppointment(date, medicalAppointmentType, customer, doctor);
