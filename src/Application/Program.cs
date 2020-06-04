@@ -1,8 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Text;
 using Core.Extensions;
 using Domain;
 using Domain.People.Customers;
+using Domain.People.Doctors;
 
 namespace Application
 {
@@ -10,6 +14,7 @@ namespace Application
     {
         private static MenuItem[] _menuItems;
         private static MedicalClinic _medicalClinic;
+
         private static void Main(string[] args)
         {
             Console.WriteLine("CLINÍCA MÉDICA");
@@ -56,7 +61,6 @@ namespace Application
                 Console.WriteLine("Aconteceu algum erro.");
                 Console.WriteLine(ex.Message);
             }
-            
         }
 
         private static void ImprimirMenuItems(MenuItem[] menuItems)
@@ -93,11 +97,59 @@ namespace Application
 
         private static void GetMedicalAppointments()
         {
-            throw new NotImplementedException();
+            Console.WriteLine();
+
+            var day = ConsoleExtensions.ReadLine<int>("Digite o dia da data que deseja pesquisar:", d =>
+             {
+                 if (d < 0 || d > 31)
+                 {
+                     throw new InvalidOperationException();
+                 }
+             });
+
+            var month = ConsoleExtensions.ReadLine<int>("Digite o mês da data que deseja pesquisar:", d =>
+            {
+                if (d < 0 || d > 12)
+                {
+                    throw new InvalidOperationException();
+                }
+            });
+
+            var year = ConsoleExtensions.ReadLine<int>("Digite o ano da data que deseja pesquisar:", d =>
+            {
+                if (d < 0 || d > 2300)
+                {
+                    throw new InvalidOperationException();
+                }
+            });
+
+            var date = new DateTime(year, month, day);
+
+            Console.WriteLine("Especialidades médicas:");
+            Console.WriteLine($"1 - {MedicalSpecialty.GeneralClinic.GetDescription()}");
+            Console.WriteLine($"2 - {MedicalSpecialty.Otorhinolaryngology.GetDescription()}");
+            Console.WriteLine($"3 - {MedicalSpecialty.Orthopedy.GetDescription()}");
+            var code = ConsoleExtensions.ReadLine<int>("Digite o código da especialidade médica: ", (c) =>
+             {
+                 if (c < 0 || c > 3)
+                 {
+                     throw new InvalidOperationException();
+                 }
+             });
+
+            MedicalSpecialty medicalSpecialty = (MedicalSpecialty)code;
+
+            var medicalAppointments = _medicalClinic.GetMedicalAppointments(date, medicalSpecialty);
+
+            foreach (var ma in medicalAppointments)
+            {
+                Console.WriteLine(ma.ToString());
+            }
         }
 
         private static void GetDoctors()
         {
+            Console.WriteLine();
             var doctors = _medicalClinic.GetDoctors();
 
             foreach (var doctor in doctors)
@@ -124,6 +176,30 @@ namespace Application
         private static void LoadCustomersFromFile()
         {
             throw new NotImplementedException();
+        }
+
+        private static IEnumerable<string> LoadFromFile()
+        {
+            Console.WriteLine();
+            Console.WriteLine();
+
+            var path = ConsoleExtensions.ReadLine<string>("Digite o caminho do arquivo:", p =>
+            {
+                if (!File.Exists(p))
+                {
+                    Console.WriteLine("Arquivo não existe");
+                    throw new InvalidOperationException();
+                }
+            });
+
+            try
+            {
+                return File.ReadAllLines(path, Encoding.UTF8);
+            }
+            catch (UnauthorizedAccessException)
+            {
+                throw new UnauthorizedAccessException("Você não tem permissão de acesso a esse arquivo.");
+            }
         }
     }
 }
