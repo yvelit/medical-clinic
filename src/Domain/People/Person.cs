@@ -117,11 +117,7 @@ namespace Domain.People
 
         public override string ToString()
         {
-            var builder = new StringBuilder($"Código: {Code} - Nome: {Name} - Consultas: [");
-
-            builder.Append(string.Join(",", MedicalAppointments.ToArray().Select(x => x.ToString()).ToArray()));
-
-            builder.Append("]");
+            var builder = new StringBuilder($"Código: {Code} - Nome: {Name}");
 
             builder.Append($" - Valor Total: {TotalValueMedicalAppointments:0.##}");
 

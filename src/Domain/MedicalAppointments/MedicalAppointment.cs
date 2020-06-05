@@ -217,7 +217,7 @@ namespace Domain.MedicalAppointments
 
         public override string ToString()
         {
-            return $"Data: {Date} - Tipo de consulta: {MedicalAppointmentType.GetDescription()} - Cliente: {CustomerCode} - Médico: {DoctorCode} - Valor: {Value}";
+            return $"Data: {Date} - Tipo de consulta: {MedicalAppointmentType.GetDescription()} - Cliente: {CustomerCode} - Médico: {DoctorCode} - Especialidade Médica: {Doctor.MedicalSpecialty.GetDescription()} - Valor: {Value}";
         }
     }
 }

@@ -11,16 +11,16 @@ namespace Domain
 {
     public class MedicalClinic
     {
-        private readonly Hashtable<Doctor> _doctors;
-        private readonly Hashtable<Customer> _customers;
-        private readonly Hashtable<MedicalAppointment> _medicalAppointments;
+        private readonly Hashtable<Crm,Doctor> _doctors;
+        private readonly Hashtable<Cpf,Customer> _customers;
+        private readonly Hashtable<DateTime,Hashtable<MedicalAppointment, MedicalAppointment>> _medicalAppointmentHashs;
         private readonly Queue<Crm>[] _lastDoctorAppointments;
 
         public MedicalClinic()
         {
-            _doctors = new Hashtable<Doctor>();
-            _customers = new Hashtable<Customer>();
-            _medicalAppointments = new Hashtable<MedicalAppointment>();
+            _doctors = new Hashtable<Crm,Doctor>();
+            _customers = new Hashtable<Cpf,Customer>();
+            _medicalAppointmentHashs = new Hashtable<DateTime, Hashtable<MedicalAppointment, MedicalAppointment>>();
             _lastDoctorAppointments = new Queue<Crm>[10];
             for (int i = 0; i < _lastDoctorAppointments.Length; i++)
             {
@@ -30,27 +30,28 @@ namespace Domain
 
         public void AddCustomer(Cpf cpf, string name, CustomerType customerType = CustomerType.Normal)
         {
-            var customer = new Customer(cpf, name, customerType);
-
-            if (_customers.Exist(customer))
+            if (_customers.Exist(cpf))
             {
                 throw new InvalidOperationException("Cliente já existe.");
             }
 
-            _customers.Add(customer);
+            var customer = new Customer(cpf, name, customerType);
+
+            _customers.Add(cpf,customer);
         }
 
         public void AddDoctor(Crm crm, string name, MedicalSpecialty medicalSpecialty)
         {
-            var doctor = new Doctor(crm, name, medicalSpecialty);
-
-            if (_doctors.Exist(doctor))
+            if (_doctors.Exist(crm))
             {
                 throw new InvalidOperationException("Médico já existe.");
             }
 
+            var doctor = new Doctor(crm, name, medicalSpecialty);
+
+
             _lastDoctorAppointments[(int)medicalSpecialty].Enqueue(crm);
-            _doctors.Add(doctor);
+            _doctors.Add(crm,doctor);
         }
 
         public void AddMedicalAppointment(Cpf cpf, MedicalAppointmentType medicalAppointmentType, MedicalSpecialty medicalSpecialty, DateTime date)
@@ -62,7 +63,14 @@ namespace Domain
 
             var medicalAppointment = new MedicalAppointment(date, medicalAppointmentType, customer, doctor);
 
-            if (_medicalAppointments.Exist(medicalAppointment))
+            if (!_medicalAppointmentHashs.Exist(date))
+            {
+                _medicalAppointmentHashs.Add(date, new Hashtable<MedicalAppointment, MedicalAppointment>());
+            }
+
+            var medicalAppointments = _medicalAppointmentHashs.Find(date);
+
+            if (medicalAppointments.Exist(medicalAppointment))
             {
                 throw new InvalidOperationException("Consulta médica já existe.");
             }
@@ -70,39 +78,40 @@ namespace Domain
             customer.AddMedicalAppointment(medicalAppointment);
             doctor.AddMedicalAppointment(medicalAppointment);
 
-            _medicalAppointments.Add(medicalAppointment);
+            medicalAppointments.Add(medicalAppointment,medicalAppointment);
         }
 
         public Customer GetCustomer(Cpf cpf)
         {
-            var key = cpf.GetHashCode();
-
-            if (!_customers.Exist(key))
+            if (!_customers.Exist(cpf))
             {
                 throw new InvalidOperationException("Cliente não existe.");
             }
 
-            return _customers.Find(key);
+            return _customers.Find(cpf);
         }
 
         public Doctor GetDoctor(Crm crm)
         {
-            var key = crm.GetHashCode();
-
-            if (!_doctors.Exist(key))
+            if (!_doctors.Exist(crm))
             {
                 throw new InvalidOperationException("Médico não existe.");
             }
 
-            return _doctors.Find(key);
+            return _doctors.Find(crm);
         }
 
         public MedicalAppointment[] GetMedicalAppointments(DateTime date, MedicalSpecialty type)
         {
-            var medicalAppointments = _medicalAppointments.ToArray();
-            var sortedMedicalAppointments = medicalAppointments.MergeSort();
+            if (!_medicalAppointmentHashs.Exist(date))
+            {
+                return new List<MedicalAppointment>().ToArray();
+            }
 
-            return sortedMedicalAppointments
+            var medicalAppointments = _medicalAppointmentHashs.Find(date);
+
+            return medicalAppointments
+                .ToArray()
                 .Where(x => x.Date == date && x.Doctor.MedicalSpecialty == type)
                 .ToArray()
                 ;
@@ -128,7 +137,14 @@ namespace Domain
 
         public int CountMedicalAppointment()
         {
-            return _medicalAppointments.Count();
+            var count = 0;
+
+            foreach (var medicalAppointments in _medicalAppointmentHashs.ToArray())
+            {
+                count += medicalAppointments.Count();
+            }
+
+            return count;
         }
     }
 }
