@@ -94,6 +94,7 @@ namespace Application
         private static void LoadMedicalAppointmentsFromFile()
         {
             var lines = LoadFromFile();
+            Console.WriteLine("Carregando...");
             int failCounter = 0;
             foreach (string line in lines)
             {
@@ -198,6 +199,7 @@ namespace Application
         private static void LoadDoctorsFromFile()
         {
             var lines = LoadFromFile();
+            Console.WriteLine("Carregando...");
             int failCounter = 0;
             foreach (string line in lines)
             {
@@ -220,6 +222,7 @@ namespace Application
         private static void LoadCustomersFromFile()
         {
             var lines = LoadFromFile();
+            Console.WriteLine("Carregando...");
             int failCounter = 0;
             foreach (string line in lines)
             {
