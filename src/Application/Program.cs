@@ -99,6 +99,7 @@ namespace Application
         private static void LoadMedicalAppointmentsFromFile()
         {
             var lines = LoadFromFile();
+            Console.WriteLine("Carregando...");
             int failCounter = 0;
             foreach (string line in lines)
             {
@@ -152,12 +153,19 @@ namespace Application
             var date = new DateTime(year, month, day);
 
             Console.WriteLine("Especialidades médicas:");
+            Console.WriteLine($"0 - {MedicalSpecialty.Urologist.GetDescription()}");
             Console.WriteLine($"1 - {MedicalSpecialty.GeneralClinic.GetDescription()}");
             Console.WriteLine($"2 - {MedicalSpecialty.Otorhinolaryngology.GetDescription()}");
             Console.WriteLine($"3 - {MedicalSpecialty.Orthopedy.GetDescription()}");
+            Console.WriteLine($"4 - {MedicalSpecialty.Anesthesiologist.GetDescription()}");
+            Console.WriteLine($"5 - {MedicalSpecialty.Dermatologist.GetDescription()}");
+            Console.WriteLine($"6 - {MedicalSpecialty.Gynecologist.GetDescription()}");
+            Console.WriteLine($"7 - {MedicalSpecialty.Neurologist.GetDescription()}");
+            Console.WriteLine($"8 - {MedicalSpecialty.Pedriatrician.GetDescription()}");
+            Console.WriteLine($"9 - {MedicalSpecialty.Surgeon.GetDescription()}");
             var code = ConsoleExtensions.ReadLine<int>("Digite o código da especialidade médica: ", (c) =>
              {
-                 if (c < 0 || c > 3)
+                 if (c < 0 || c > 9)
                  {
                      throw new InvalidOperationException();
                  }
@@ -197,6 +205,7 @@ namespace Application
         private static void LoadDoctorsFromFile()
         {
             var lines = LoadFromFile();
+            Console.WriteLine("Carregando...");
             int failCounter = 0;
             foreach (string line in lines)
             {
@@ -219,6 +228,7 @@ namespace Application
         private static void LoadCustomersFromFile()
         {
             var lines = LoadFromFile();
+            Console.WriteLine("Carregando...");
             int failCounter = 0;
             foreach (string line in lines)
             {

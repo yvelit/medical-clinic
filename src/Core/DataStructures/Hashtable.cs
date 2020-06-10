@@ -4,70 +4,139 @@ using System.Linq;
 
 namespace Core.DataStructures
 {
-    public class Hashtable<T>
+    //public class Hashtable<T> : Hashtable<int,T>
+    //{
+    //    public Hashtable():base()
+    //    {
+    //    }
+
+    //    public void Add(T value)
+    //    {
+    //        if (value.Equals(default(T)))
+    //        {
+    //            throw new ArgumentException("Valor não pode ser nula.");
+    //        }
+
+    //        var key = value.GetHashCode();
+
+    //        if (Exist(key))
+    //        {
+    //            throw new InvalidOperationException("Um elemento com o mesmo identificador já existe.");
+    //        }
+
+    //        _table.Add(key, value);
+    //    }
+
+    //    public T Remove(T data)
+    //    {
+    //        var key = data.GetHashCode();
+
+    //        return Remove(key);
+    //    }
+
+    //    public T Remove(int key)
+    //    {
+    //        if (!Exist(key))
+    //        {
+    //            throw new InvalidOperationException("Elemento não existe.");
+    //        }
+
+    //        var value = _table[key];
+
+    //        _table.Remove(key);
+
+    //        return value;
+    //    }
+
+    //    public bool Exist(T data)
+    //    {
+    //        var key = data.GetHashCode();
+
+    //        return Exist(key);
+    //    }
+
+    //    public bool Exist(int key)
+    //    {
+    //        return _table.ContainsKey(key);
+    //    }
+
+    //    public T Find(int key)
+    //    {
+    //        try
+    //        {
+    //            return _table[key];
+    //        }
+    //        catch (KeyNotFoundException)
+    //        {
+    //            return default;
+    //        }
+    //    }
+
+    //    public int Count()
+    //    {
+    //        return _table.Count;
+    //    }
+
+    //    public T[] ToArray()
+    //    {
+    //        return _table.Values.ToArray();
+    //    }
+    //}
+
+    public class Hashtable<TKey, TValue>
     {
-        private readonly IDictionary<int, T> _table;
+        protected readonly IDictionary<int, TValue> _table;
 
         public Hashtable()
         {
-            _table = new Dictionary<int, T>();
+            _table = new Dictionary<int, TValue>();
         }
 
-        public void Add(T data)
+        public void Add(TKey key, TValue value)
         {
-            if (data.Equals(default(T)))
+            if (value.Equals(default(TValue)))
             {
-                throw new ArgumentException("Data não pode ser nula.");
+                throw new ArgumentException("Valor não pode ser nula.");
             }
-
-            var key = data.GetHashCode();
 
             if (Exist(key))
             {
                 throw new InvalidOperationException("Um elemento com o mesmo identificador já existe.");
             }
 
-            _table.Add(key, data);
+            var k = key.GetHashCode();
+
+            _table.Add(k, value);
         }
 
-        public T Remove(T data)
-        {
-            var key = data.GetHashCode();
-
-            return Remove(key);
-        }
-
-        public T Remove(int key)
+        public TValue Remove(TKey key)
         {
             if (!Exist(key))
             {
                 throw new InvalidOperationException("Elemento não existe.");
             }
 
-            var value = _table[key];
+            var k = key.GetHashCode();
 
-            _table.Remove(key);
+            var value = _table[k];
+
+            _table.Remove(k);
 
             return value;
         }
 
-        public bool Exist(T data)
+        public bool Exist(TKey key)
         {
-            var key = data.GetHashCode();
-
-            return Exist(key);
+            var k = key.GetHashCode();
+            return _table.ContainsKey(k);
         }
 
-        public bool Exist(int key)
-        {
-            return _table.ContainsKey(key);
-        }
-
-        public T Find(int key)
+        public TValue Find(TKey key)
         {
             try
             {
-                return _table[key];
+                var k = key.GetHashCode();
+                return _table[k];
             }
             catch (KeyNotFoundException)
             {
@@ -80,7 +149,7 @@ namespace Core.DataStructures
             return _table.Count;
         }
 
-        public T[] ToArray()
+        public TValue[] ToArray()
         {
             return _table.Values.ToArray();
         }
