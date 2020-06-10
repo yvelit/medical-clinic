@@ -34,6 +34,7 @@ namespace Domain.People
 
         #endregion CustomerType
 
+        //Método que calcula valor da consulta para o cliente com base em seu plano de saúde
         protected override decimal GetMedicalAppointmentValue(MedicalAppointment medicalAppointment)
         {
             switch (medicalAppointment.Customer.CustomerType)

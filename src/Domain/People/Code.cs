@@ -3,6 +3,7 @@ using Core.Extensions;
 
 namespace Domain.People
 {
+    //Classe genérica que possui uma string de código valido para pessoas(cliente e médico)
     public abstract class Code
     {
         public Code(string value)

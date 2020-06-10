@@ -75,6 +75,7 @@ namespace Domain.People
 
         #endregion MedicalSpecialty
 
+        //Método que calcula valor da consulta para o médico com base no plano de saúde do cliente
         protected override decimal GetMedicalAppointmentValue(MedicalAppointment medicalAppointment)
         {
             if (medicalAppointment.Customer.CustomerType == CustomerType.Normal)

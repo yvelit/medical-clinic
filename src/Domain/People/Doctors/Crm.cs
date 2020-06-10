@@ -3,6 +3,7 @@ using System.Text.RegularExpressions;
 
 namespace Domain.People.Doctors
 {
+    //Classe com identificador de médico e verificação de validade com base em regex
     public class Crm : Code
     {
         private const string CRM_REGEX = @"^\d{5}$";

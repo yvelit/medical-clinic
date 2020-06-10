@@ -121,7 +121,7 @@ namespace Application
             Console.WriteLine($"Foram carregados {_medicalClinic.CountMedicalAppointment()} consultas, {failCounter} falharam");
         }
 
-
+        //Solicita valores de data e especialidade do médico ao usuário, chama método de buscar consultas na clínica, itera sobre os resultados e imprime
         private static void GetMedicalAppointments()
         {
             Console.WriteLine();
@@ -181,6 +181,7 @@ namespace Application
             }
         }
 
+        //Chama método de buscar todos os médicos na clínica, itera sobre os resultados e imprime
         private static void GetDoctors()
         {
             Console.WriteLine();
@@ -192,6 +193,7 @@ namespace Application
             }
         }
 
+        //Solicita valor de cpf ao usuário, chama método de buscar cliente na clínica e imprime resultado
         private static void GetCustomer()
         {
             Console.WriteLine();

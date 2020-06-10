@@ -6,6 +6,8 @@ using Domain.People.Doctors;
 
 namespace Domain.MedicalAppointments
 {
+    //Classe que lida com consultas
+    //Gets e Sets dispensam comentários
     public class MedicalAppointment : ICustomerRelated, IDoctorRelated,IComparable<MedicalAppointment>
     {
         public MedicalAppointment(DateTime date, MedicalAppointmentType medicalAppointmentType, Customer customer, Doctor doctor)
@@ -157,6 +159,7 @@ namespace Domain.MedicalAppointments
 
         #region Value
 
+        //Calcula valor final da consulta com base no tipo especificado, sob demanda ou agendada
         private decimal GetValue()
         {
             decimal multiplier;
@@ -185,6 +188,7 @@ namespace Domain.MedicalAppointments
             return obj is MedicalAppointment other && Equals(other);
         }
 
+        //Compara todas as propriedades da consulta
         private bool Equals(MedicalAppointment other)
         {
             return Date == other.Date &&
@@ -195,6 +199,7 @@ namespace Domain.MedicalAppointments
                    Doctor.Equals(other.Doctor);
         }
 
+        //Cria hashcode para consulta
         public override int GetHashCode()
         {
             var hashCode = 825685457;
@@ -205,6 +210,7 @@ namespace Domain.MedicalAppointments
             return hashCode;
         }
 
+        //Compara consultas com base na data
         public int CompareTo(MedicalAppointment other)
         {
             if (other == null)

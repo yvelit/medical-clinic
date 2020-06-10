@@ -18,6 +18,7 @@ namespace Domain
 
         public MedicalClinic()
         {
+            //Inicializa clínica com as tabelas vazias e um vetor contendo 10 filas representando as especialidades médicas para obter o próximo médico a ser atribuido a uma consulta
             _doctors = new Hashtable<Crm,Doctor>();
             _customers = new Hashtable<Cpf,Customer>();
             _medicalAppointmentHashs = new Hashtable<DateTime, Hashtable<MedicalAppointment, MedicalAppointment>>();
@@ -28,6 +29,7 @@ namespace Domain
             }
         }
 
+        //Cria nova entidade cliente e adiciona pelo metodo Add da tabela hash
         public void AddCustomer(Cpf cpf, string name, CustomerType customerType = CustomerType.Normal)
         {
             if (_customers.Exist(cpf))
@@ -40,6 +42,8 @@ namespace Domain
             _customers.Add(cpf,customer);
         }
 
+        //Cria nova entidade médico e adiciona pelo metodo Add da tabela hash
+        //Insere médico na fila de sua especialidade para que receba uma consulta
         public void AddDoctor(Crm crm, string name, MedicalSpecialty medicalSpecialty)
         {
             if (_doctors.Exist(crm))
@@ -54,6 +58,12 @@ namespace Domain
             _doctors.Add(crm,doctor);
         }
 
+        //Cria nova entidade consulta e adiciona pelo metodo Add da tabela hash
+        //Busca cliente com base no cpf
+        //Remove médico da fila de agregamento de consultas e o coloca na última posição
+        //Verifica a existência da consulta
+        //Adiciona consulta a lista de consultas do médico e do cliente
+        //Adiciona consulta à tabela hash
         public void AddMedicalAppointment(Cpf cpf, MedicalAppointmentType medicalAppointmentType, MedicalSpecialty medicalSpecialty, DateTime date)
         {
             var customer = GetCustomer(cpf);
@@ -81,6 +91,7 @@ namespace Domain
             medicalAppointments.Add(medicalAppointment,medicalAppointment);
         }
 
+        //Busca cliente na tabela hash com base em um CPF
         public Customer GetCustomer(Cpf cpf)
         {
             if (!_customers.Exist(cpf))
@@ -91,6 +102,7 @@ namespace Domain
             return _customers.Find(cpf);
         }
 
+        //Busca médico na tabela hash com base em um CRM
         public Doctor GetDoctor(Crm crm)
         {
             if (!_doctors.Exist(crm))
@@ -101,6 +113,7 @@ namespace Domain
             return _doctors.Find(crm);
         }
 
+        //Busca consulta na tabela hash com base na data e na especialidade da consulta
         public MedicalAppointment[] GetMedicalAppointments(DateTime date, MedicalSpecialty type)
         {
             if (!_medicalAppointmentHashs.Exist(date))
@@ -117,6 +130,7 @@ namespace Domain
                 ;
         }
 
+        //Busca todos os médicos da tabela e os ordena
         public Doctor[] GetDoctors()
         {
             var doctors = _doctors.ToArray();
@@ -124,17 +138,19 @@ namespace Domain
             return doctors.MergeSortDescending().ToArray();
         }
 
+        //Busca quantidade de clientes
         public int CountCustomer()
         {
             return _customers.Count();
         }
-///home/victor/Área de Trabalho
 
+        //Busca quantidade de médicos
         public int CountDoctor()
         {
             return _doctors.Count();
         }
 
+        //Busca quantidade de consultas
         public int CountMedicalAppointment()
         {
             var count = 0;

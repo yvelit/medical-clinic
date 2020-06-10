@@ -2,6 +2,7 @@
 
 namespace Domain.MedicalAppointments
 {
+    //Enum para guardar possiveis tipos de consulta
     public enum MedicalAppointmentType
     {
         [Description("Sob demanda")]

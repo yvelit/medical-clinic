@@ -3,6 +3,7 @@ using System.Text.RegularExpressions;
 
 namespace Domain.People.Customers
 {
+    //Classe com identificador de cliente e verificação de validade com base em regex
     public class Cpf : Code
     {
         private const string CPF_REGEX = @"^\d{9}\-\d{2}$";

@@ -7,7 +7,8 @@ using Domain.MedicalAppointments;
 
 namespace Domain.People
 {
-    public abstract class Person:IComparable<Person>
+    //Classe genérica para pessoas(cliente e médico) possuindo apenas nome, identificador e uma lista de consultas
+    public abstract class Person : IComparable<Person>
     {
         protected Person(Code code, string name)
         {
