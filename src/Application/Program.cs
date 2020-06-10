@@ -11,6 +11,7 @@ using Domain.People.Doctors;
 
 namespace Application
 {
+    // Lida com as interações com o usuário e chamadas dos métodos da clínica
     internal class Program
     {
         private static MenuItem[] _menuItems;
@@ -45,6 +46,7 @@ namespace Application
             }
         }
 
+        //Executa a opção selecionada pelo usuário
         private static void Executar(int valorOpcao)
         {
             try
@@ -78,6 +80,7 @@ namespace Application
             }
         }
 
+        //Relaciona os itens de menu da tela com os seus respectivos métodos de execução
         private static MenuItem[] GetMenuItems()
         {
             return new MenuItem[]
@@ -91,6 +94,8 @@ namespace Application
             };
         }
 
+        //Carrega linhas do arquivo e itera sobre elas splitando por ";", adicionando os elementos aos respectivas entidades e contando o número de falhas
+        //Válido para LoadCustomersFromFile e LoadDoctorsFromFile
         private static void LoadMedicalAppointmentsFromFile()
         {
             var lines = LoadFromFile();
@@ -114,6 +119,7 @@ namespace Application
 
             Console.WriteLine($"Foram carregados {_medicalClinic.CountMedicalAppointment()} consultas, {failCounter} falharam");
         }
+
 
         private static void GetMedicalAppointments()
         {
@@ -229,6 +235,7 @@ namespace Application
             Console.WriteLine($"Foram carregados {_medicalClinic.CountCustomer()} pacientes, {failCounter} falharam");
         }
 
+        //Carrega arquivo dado um path, lê todas as linhas do arquivo e retorna as mesmas para serem tratadas em seus respectivos métodos
         private static IEnumerable<string> LoadFromFile()
         {
             Console.WriteLine();
